@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope, FaSeedling, FaUsers, FaTractor } from "react-icons/fa";
 
-export default function Signup() {
+export default function Signup({ setIsAuthenticated }) {
   const [accountType, setAccountType] = useState("consumer");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -10,6 +10,7 @@ export default function Signup() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,6 +18,17 @@ export default function Signup() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+
+    if (!formData.fullName || !formData.email || !formData.password) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    if (accountType === "farmer" && !formData.farmName) {
+      alert("Please enter your farm name");
+      return;
+    }
 
     const payload =
       accountType === "consumer"
@@ -35,6 +47,9 @@ export default function Signup() {
           };
 
     console.log("SEND TO BACKEND API ", payload);
+    
+    setIsAuthenticated(true);
+    navigate('/dashboard');
   }
 
   return (
@@ -115,6 +130,7 @@ export default function Signup() {
                 placeholder={accountType === "consumer" ? "Your Name" : "Farm Owner Name"}
                 className="w-full border rounded-lg py-3 pl-10 outline-none"
                 onChange={handleChange}
+                value={formData.fullName}
                 required
               />
             </div>
@@ -129,6 +145,7 @@ export default function Signup() {
                   placeholder="Farm Name"
                   className="w-full border rounded-lg py-3 pl-10 outline-none"
                   onChange={handleChange}
+                  value={formData.farmName}
                   required
                 />
               </div>
@@ -143,11 +160,12 @@ export default function Signup() {
                 placeholder="you@example.com"
                 className="w-full border rounded-lg py-3 pl-10 outline-none"
                 onChange={handleChange}
+                value={formData.email}
                 required
               />
             </div>
 
-           
+            {/* PASSWORD */}
             <div className="relative">
               <FaLock className="absolute top-3 left-3 text-gray-400" />
               <input
@@ -156,12 +174,12 @@ export default function Signup() {
                 placeholder="••••••••"
                 className="w-full border rounded-lg py-3 pl-10 outline-none"
                 onChange={handleChange}
+                value={formData.password}
                 required
               />
             </div>
 
-         
-            <button className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium shadow-md transition">
+            <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium shadow-md transition">
               Create Account
             </button>
 

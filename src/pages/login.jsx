@@ -1,10 +1,33 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTractor, FaUser } from "react-icons/fa";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 
-export default function Login() {
+export default function Login({ setIsAuthenticated }) {
   const [role, setRole] = useState("consumer");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const payload = {
+      role,
+      email,
+      password
+    };
+
+    console.log("SEND TO BACKEND API ", payload);
+    
+    setIsAuthenticated(true);
+    navigate('/dashboard');
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F4FFF7]">
@@ -79,52 +102,58 @@ export default function Login() {
             </button>
           </div>
 
-          {/* EMAIL FIELD */}
-          <div className="mb-4">
-            <label className="text-gray-700 text-sm">Email</label>
-            <div className="flex items-center border border-gray-300 rounded-lg px-3 mt-1">
-              <AiOutlineMail className="text-gray-500" />
-              <input
-                type="email"
-                placeholder="you@example.com"
-                className="w-full p-2 outline-none"
-              />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* EMAIL FIELD */}
+            <div>
+              <label className="text-gray-700 text-sm">Email</label>
+              <div className="flex items-center border border-gray-300 rounded-lg px-3 mt-1">
+                <AiOutlineMail className="text-gray-500" />
+                <input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-2 outline-none"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* PASSWORD FIELD */}
-          <div className="mb-4">
-            <label className="text-gray-700 text-sm">Password</label>
-            <div className="flex items-center border border-gray-300 rounded-lg px-3 mt-1">
-              <AiOutlineLock className="text-gray-500" />
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="w-full p-2 outline-none"
-              />
+            {/* PASSWORD FIELD */}
+            <div>
+              <label className="text-gray-700 text-sm">Password</label>
+              <div className="flex items-center border border-gray-300 rounded-lg px-3 mt-1">
+                <AiOutlineLock className="text-gray-500" />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-2 outline-none"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* REMEMBER ME AND FORGOT PASSWORD */}
-          <div className="flex justify-between items-center text-sm mb-4">
-            <label className="flex items-center gap-2">
-              <input type="checkbox" />
-              Remember me
-            </label>
-            <a href="#" className="text-green-600">Forgot password?</a>
-          </div>
+            {/* REMEMBER ME AND FORGOT PASSWORD */}
+            <div className="flex justify-between items-center text-sm">
+              <label className="flex items-center gap-2">
+                <input type="checkbox" />
+                Remember me
+              </label>
+              <a href="#" className="text-green-600">Forgot password?</a>
+            </div>
 
-          {/* SUBMIT BUTTON */}
-          <button className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg w-full font-semibold shadow-md transition">
-            Sign In
-          </button>
+            {/* SUBMIT BUTTON */}
+            <button type="submit" className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg w-full font-semibold shadow-md transition">
+              Sign In
+            </button>
 
-          <p className="mt-4 text-center text-sm">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-green-600 font-semibold">
-              Sign Up
-            </Link>
-          </p>
+            <p className="text-center text-sm">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-green-600 font-semibold">
+                Sign Up
+              </Link>
+            </p>
+          </form>
         </div>
       </div>
     </div>

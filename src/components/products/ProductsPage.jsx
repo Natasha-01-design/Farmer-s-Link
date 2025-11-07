@@ -1,5 +1,4 @@
-// src/components/products/ProductsPage.jsx
-import React, { useState } from 'react'; // FIXED: Added React import for hooks
+import { useState } from 'react'; 
 import { Plus } from 'lucide-react';
 import ProductCard from './ProductCard';
 import ProductModal from './ProductModal';

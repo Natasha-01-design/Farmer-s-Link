@@ -1,12 +1,9 @@
-// src/components/orders/OrderFilters.jsx
-import React from 'react'; // FIXED: Added React import
-
 export default function OrderFilters({ filter, setFilter, orders }) {
   const counts = {
-    all: (orders ?? []).length, // FIXED: Added safety check for orders
-    pending: (orders ?? []).filter(o => o.status === 'pending').length, // FIXED: Added safety check for orders
-    confirmed: (orders ?? []).filter(o => o.status === 'confirmed').length, // FIXED: Added safety check for orders
-    completed: (orders ?? []).filter(o => o.status === 'completed').length // FIXED: Added safety check for orders
+    all: (orders ?? []).length,
+    pending: (orders ?? []).filter(o => o.status === 'pending').length,
+    confirmed: (orders ?? []).filter(o => o.status === 'confirmed').length,
+    completed: (orders ?? []).filter(o => o.status === 'completed').length
   };
 
   return (

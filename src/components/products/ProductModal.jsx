@@ -1,10 +1,9 @@
-
-import React, { useState } from 'react'; 
+import { useState } from 'react';
 import { X, Plus } from 'lucide-react';
 import { categories } from '../../data/mockData';
 
 export default function ProductModal({ isOpen, onClose, product, onSave }) {
-  const [formData, setFormData] = useState(product || { 
+  const [formData, setFormData] = useState(product || {
     name: '', category: '', description: '', price: '', unit: '', stock: ''
   });
   const [imagePreview, setImagePreview] = useState(product?.image || null);
@@ -33,7 +32,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
       <div className="bg-white rounded-xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-gray-900">
@@ -45,13 +44,17 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
         </div>
 
         <div className="space-y-4">
+          {/* Image Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Product Photo</label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-green-500 transition-colors">
               {imagePreview ? (
                 <div className="relative">
                   <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
-                  <button onClick={() => setImagePreview(null)} className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600">
+                  <button
+                    onClick={() => setImagePreview(null)}
+                    className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
+                  >
                     <X size={16} />
                   </button>
                 </div>
@@ -67,18 +70,62 @@ export default function ProductModal({ isOpen, onClose, product, onSave }) {
             </div>
           </div>
 
-          <input type="text" placeholder="Product Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none" />
-          <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+          {/* Form Fields */}
+          <input
+            type="text"
+            placeholder="Product Name"
+            value={formData.name}
+            onChange={e => setFormData({ ...formData, name: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          />
+
+          <select
+            value={formData.category}
+            onChange={e => setFormData({ ...formData, category: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          >
             <option value="">Select Category</option>
-            {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
-          <textarea placeholder="Description" value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none h-20 resize-none" />
+
+          <textarea
+            placeholder="Description"
+            value={formData.description}
+            onChange={e => setFormData({ ...formData, description: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none h-20 resize-none"
+          />
+
           <div className="grid grid-cols-2 gap-4">
-            <input type="number" placeholder="Price" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none" />
-            <input type="text" placeholder="Unit (kg, tray)" value={formData.unit} onChange={e => setFormData({...formData, unit: e.target.value})} className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none" />
+            <input
+              type="number"
+              placeholder="Price"
+              value={formData.price}
+              onChange={e => setFormData({ ...formData, price: e.target.value })}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Unit (kg, tray)"
+              value={formData.unit}
+              onChange={e => setFormData({ ...formData, unit: e.target.value })}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+            />
           </div>
-          <input type="number" placeholder="Stock Quantity" value={formData.stock} onChange={e => setFormData({...formData, stock: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none" />
-          <button onClick={handleSubmit} className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
+
+          <input
+            type="number"
+            placeholder="Stock Quantity"
+            value={formData.stock}
+            onChange={e => setFormData({ ...formData, stock: e.target.value })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          />
+
+          <button
+            onClick={handleSubmit}
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors font-medium"
+          >
             {product ? 'Update Product' : 'Add Product'}
           </button>
         </div>

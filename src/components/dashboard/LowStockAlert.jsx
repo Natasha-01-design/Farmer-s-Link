@@ -1,6 +1,4 @@
 
-import React from 'react'; 
-
 export default function LowStockAlert({ products }) {
   const lowStock = (products ?? []).filter(p => p.stock < 50).slice(0, 3); 
   if (lowStock.length === 0) return null;

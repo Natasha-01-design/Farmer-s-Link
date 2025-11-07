@@ -1,5 +1,3 @@
-// src/components/orders/OrderCard.jsx
-import React from 'react'; // FIXED: Added React import
 import { Check } from 'lucide-react';
 import Badge from '../ui/Badge';
 
@@ -22,7 +20,7 @@ export default function OrderCard({ order, onConfirm }) {
           <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-100">
             <div>
               <p className="font-medium text-gray-900">{item.name}</p>
-              <p className="text-sm text-gray-600">${item.price.toFixed(2)} per unit</p>
+              <p className="text-sm text-gray-600">Ksh{item.price.toFixed(2)} per unit</p>
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Qty: {item.quantity}</p>

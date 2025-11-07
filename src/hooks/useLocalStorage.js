@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // FIXED: Added React import for hooks
+import React, { useState, useEffect } from 'react';
 
 export function useLocalStorage(key, initialValue) {
   const [value, setValue] = useState(() => {
