@@ -1,45 +1,63 @@
-
-import React from 'react'; 
-import { Edit2, Trash2 } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
+import { useToast } from '../../hooks/Toasthook';
 
 export default function ProductCard({ product, onEdit, onDelete }) {
+  const { success } = useToast();
+
+  const handleEdit = () => {
+    onEdit(product);
+    success(`Editing "${product.name}"...`);
+  };
+
+  const handleDelete = () => {
+    onDelete(product.id);
+  };
+
   return (
-    <div className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all group">
-      <div className="relative h-48 overflow-hidden">
-        <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+      {/* Image */}
+      <div className="relative h-48 overflow-hidden bg-gray-100">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover hover:scale-105 transition-transform"
+        />
+        <div className="absolute top-2 right-2 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+          Stock: {product.stock}
+        </div>
       </div>
-      <div className="p-5">
-        <span className="inline-block bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full mb-3">
-          {product.category}
-        </span>
-        <h3 className="font-bold text-gray-900 text-lg mb-2">{product.name}</h3>
-        <p className="text-sm text-gray-600 mb-4">{product.description}</p>
-        
+
+      {/* Content */}
+      <div className="p-4">
+        <h3 className="font-semibold text-gray-900 mb-1">{product.name}</h3>
+        <p className="text-sm text-gray-600 mb-3">{product.category}</p>
+
+        {product.description && (
+          <p className="text-sm text-gray-600 mb-3 line-clamp-2">{product.description}</p>
+        )}
+
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-2xl font-bold text-gray-900">Ksh{product.price}</p>
-            <p className="text-sm text-gray-600">{product.unit}</p>
-          </div>
-          <div className="text-right">
-            <p className={`text-lg font-semibold ${product.stock < 50 ? 'text-orange-600' : 'text-green-600'}`}>
-              {product.stock}
-            </p>
-            <p className="text-xs text-gray-600">in stock</p>
+            <p className="text-2xl font-bold text-green-600">Ksh {product.price}</p>
+            <p className="text-xs text-gray-500">per {product.unit || 'unit'}</p>
           </div>
         </div>
 
+        {/* Actions */}
         <div className="flex gap-2">
           <button
-            onClick={() => onEdit(product)}
-            className="flex-1 flex items-center justify-center gap-2 bg-green-50 text-green-700 py-2 rounded-lg hover:bg-green-100 transition-colors"
+            onClick={handleEdit}
+            className="flex-1 flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 rounded-lg transition-colors font-medium"
           >
-            <Edit2 size={16} /> Edit
+            <Edit size={18} />
+            Edit
           </button>
           <button
-            onClick={() => onDelete(product.id)}
-            className="flex items-center justify-center gap-2 bg-red-50 text-red-700 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors"
+            onClick={handleDelete}
+            className="flex-1 flex items-center justify-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 py-2 rounded-lg transition-colors font-medium"
           >
-            <Trash2 size={16} />
+            <Trash2 size={18} />
+            Delete
           </button>
         </div>
       </div>

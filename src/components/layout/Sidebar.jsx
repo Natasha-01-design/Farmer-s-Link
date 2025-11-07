@@ -1,26 +1,30 @@
+import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Package, ShoppingCart, LogOut } from 'lucide-react';
+import { UserContext } from '../../App';
 
 export default function Sidebar({ productCount, pendingOrders }) {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const handleLogout = () => {
-    navigate('/login');
-  };
+  const { user, handleLogout } = useContext(UserContext);
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogoutClick = () => {
+    handleLogout();
+    navigate('/login');
+  };
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-lg">FD</span>
+            <span className="text-white font-bold text-lg">🌱</span>
           </div>
           <div>
             <h1 className="text-lg font-bold text-gray-900">FarmDirect</h1>
-            <p className="text-xs text-gray-600">Farmer</p>
+            <p className="text-xs text-gray-600">{user?.role === 'farmer' ? 'Farmer' : 'farmer'}</p>
           </div>
         </div>
       </div>
@@ -73,11 +77,11 @@ export default function Sidebar({ productCount, pendingOrders }) {
 
       <div className="p-4 border-t border-gray-200">
         <div className="mb-3">
-          <p className="text-sm font-medium text-gray-900">kokob</p>
-          <p className="text-xs text-gray-600">kokob@gmail.com</p>
+          <p className="text-sm font-medium text-gray-900">{user?.fullName || 'User'}</p>
+          <p className="text-xs text-gray-600">{user?.email || 'user@example.com'}</p>
         </div>
         <button
-          onClick={handleLogout}
+          onClick={handleLogoutClick}
           className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
         >
           <LogOut size={18} />

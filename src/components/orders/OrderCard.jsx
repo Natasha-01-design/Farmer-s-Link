@@ -24,7 +24,7 @@ export default function OrderCard({ order, onConfirm }) {
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
-              <p className="font-bold text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
+              <p className="font-bold text-gray-900">ksh{(item.price * item.quantity).toFixed(2)}</p>
             </div>
           </div>
         ))}
@@ -32,7 +32,7 @@ export default function OrderCard({ order, onConfirm }) {
 
       <div className="flex items-center justify-between pt-4 border-t border-gray-200">
         <p className="font-bold text-gray-900 text-lg">Total Amount</p>
-        <p className="font-bold text-gray-900 text-xl">${order.total.toFixed(2)}</p>
+        <p className="font-bold text-gray-900 text-xl">ksh{order.total.toFixed(2)}</p>
       </div>
 
       {order.status === 'pending' && (

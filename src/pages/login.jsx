@@ -12,6 +12,7 @@ export default function Login({ setIsAuthenticated }) {
   function handleSubmit(e) {
     e.preventDefault();
     
+    // Simple validation
     if (!email || !password) {
       alert("Please fill in all fields");
       return;
@@ -25,6 +26,7 @@ export default function Login({ setIsAuthenticated }) {
 
     console.log("SEND TO BACKEND API ", payload);
     
+    // After successful login, set authenticated to true
     setIsAuthenticated(true);
     navigate('/dashboard');
   }

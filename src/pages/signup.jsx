@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope, FaSeedling, FaUsers, FaTractor } from "react-icons/fa";
 
-export default function Signup({ setIsAuthenticated }) {
+export default function Signup({ setIsAuthenticated, setUser }) {
   const [accountType, setAccountType] = useState("consumer");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -18,7 +18,6 @@ export default function Signup({ setIsAuthenticated }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
 
     if (!formData.fullName || !formData.email || !formData.password) {
       alert("Please fill in all required fields");
@@ -48,6 +47,13 @@ export default function Signup({ setIsAuthenticated }) {
 
     console.log("SEND TO BACKEND API ", payload);
     
+    // After successful signup, set user data
+    setUser({
+      role: accountType,
+      email: formData.email,
+      fullName: formData.fullName,
+      farmName: formData.farmName,
+    });
     setIsAuthenticated(true);
     navigate('/dashboard');
   }

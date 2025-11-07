@@ -19,7 +19,7 @@ export default function RecentOrders({ orders }) {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-bold text-gray-900">${order.total.toFixed(2)}</p>
+                <p className="font-bold text-gray-900">KSh {order.total.toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 <Badge status={order.status} />
               </div>
             </div>
