@@ -1,6 +1,6 @@
-import { Bell } from 'lucide-react';
+import { Bell, Menu } from 'lucide-react';
 
-export default function Header({ currentPage }) {
+export default function Header({ currentPage, onMenuClick, isMobile }) {
   const titles = {
     dashboard: 'Dashboard Overview',
     products: 'Your Products',
@@ -14,14 +14,25 @@ export default function Header({ currentPage }) {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">
-          {titles[currentPage] || 'Welcome'}
-        </h2>
-        <p className="text-sm text-gray-600 mt-1">
-          {subtitles[currentPage] || 'FarmDirect Dashboard'}
-        </p>
+    <header className="bg-white border-b border-gray-200 px-4 py-4 flex items-center justify-between sticky top-0 z-10 lg:px-8">
+      <div className="flex items-center gap-4">
+        {isMobile && (
+          <button
+            onClick={onMenuClick}
+            className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Open navigation menu"
+          >
+            <Menu size={24} />
+          </button>
+        )}
+        <div>
+          <h2 className="text-xl lg:text-2xl font-bold text-gray-900">
+            {titles[currentPage] || 'Welcome'}
+          </h2>
+          <p className="text-sm text-gray-600 mt-1 hidden sm:block">
+            {subtitles[currentPage] || 'FarmDirect Dashboard'}
+          </p>
+        </div>
       </div>
 
       <div className="flex items-center gap-4">
